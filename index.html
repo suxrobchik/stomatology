@@ -79,12 +79,7 @@
       font-weight: 900;
       text-align:center;
     }
-    .titleBlock p{
-      margin:6px 0 0;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.4;
-    }
+
     .pill{
       display:inline-flex;
       align-items:center;
@@ -137,7 +132,7 @@
       font-weight: 950;
     }
 
-    /* iOS-like buttons */
+    /* Buttons */
     .btnRow{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px}
     .btn{
       border:0;
@@ -267,6 +262,8 @@
       position:relative;
       overflow:hidden;
       transition: transform .15s ease, background .15s ease;
+      cursor:pointer;
+      -webkit-tap-highlight-color: transparent;
     }
     .svc:hover{transform: translateY(-2px)}
     .svc .ic{
@@ -286,27 +283,8 @@
     .icOrange{background: linear-gradient(135deg, rgba(255,159,10,1), rgba(255,214,10,.95))}
     .icRed{background: linear-gradient(135deg, rgba(255,69,58,1), rgba(255,159,10,.95))}
 
-    /* Karies block */
-    .karies{
-      display:grid;
-      grid-template-columns: .95fr 1.05fr;
-      gap: 10px;
-      align-items:stretch;
-    }
-    @media (max-width: 880px){ .karies{grid-template-columns:1fr} }
-
-    .imgBox{
-      border-radius: 18px;
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.07);
-      overflow:hidden;
-      box-shadow: var(--shadow2);
-      min-height: 240px;
-      display:grid;
-      place-items:center;
-    }
-    .imgBox img{width:100%; height:100%; object-fit:cover; display:block}
-
+    /* Karies block (S2: rasm olib tashlangan) */
+    .karies{display:block;}
     .steps{
       border-radius: 18px;
       border:1px solid var(--line);
@@ -344,6 +322,8 @@
       border:1px solid var(--line);
       background: rgba(255,255,255,.08);
       box-shadow: var(--shadow2);
+      cursor:pointer;
+      -webkit-tap-highlight-color: transparent;
     }
     .row b{font-weight: 950; letter-spacing:-.2px}
     .row em{display:block; margin-top:3px; font-style:normal; color: var(--muted); font-size: 12px; font-weight: 700}
@@ -421,6 +401,7 @@
       display:none;
       max-width: calc(100% - 24px);
       text-align:center;
+      z-index:9999;
     }
 
     .footer{
@@ -431,6 +412,69 @@
       font-weight: 700;
       opacity:.95;
     }
+
+    /* L1: Service Modal */
+    .modalOverlay{
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,.55);
+      z-index: 9998;
+      padding: 14px;
+    }
+    .modalCard{
+      width: min(560px, 100%);
+      border-radius: var(--r24);
+      padding: 14px;
+    }
+    .modalHead{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom: 8px;
+    }
+    .modalHead h3{
+      margin:0;
+      font-size: 18px;
+      font-weight: 950;
+      letter-spacing:-.3px;
+      line-height:1.15;
+    }
+    .modalClose{
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.08);
+      color: var(--text);
+      border-radius: 14px;
+      padding: 8px 10px;
+      cursor:pointer;
+      font-weight: 950;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .modalP{
+      margin:8px 0 0;
+      color: var(--muted);
+      line-height: 1.6;
+      font-weight: 750;
+      font-size: 13px;
+    }
+    .modalWarn{
+      margin:10px 0 0;
+      padding-top:10px;
+      border-top: 1px dashed rgba(255,255,255,.18);
+      color: rgba(255,159,10,.95);
+      font-weight: 900;
+      font-size: 13px;
+      line-height:1.5;
+    }
+    .modalPrice{
+      margin:10px 0 0;
+      font-weight: 950;
+      font-size: 14px;
+      letter-spacing:-.2px;
+    }
   </style>
 </head>
 
@@ -438,7 +482,6 @@
   <div class="safeTop"></div>
 
   <div class="wrap">
-    <!-- (1) HEADER: markazda, emojili -->
     <div class="header">
       <div class="titleBlock">
         <h1>🦷 Stomatologiya 🦷</h1>
@@ -448,16 +491,10 @@
     <section class="glass hero" id="home">
       <div class="heroInner">
         <div class="heroLeft">
-          <!-- (2) Navbatsiz/Tez/Qulay saqlanadi -->
           <div class="pill">✅ Navbatsiz • ✅ Tez • ✅ Qulay</div>
-
-          <!-- (2) Ishontiruvchi emojili sarlavha -->
           <div class="big">Qabulga yozilish — 30 soniyada 🦷✨</div>
 
-          <!-- (2) Izoh matni olib tashlangan -->
-
           <div class="btnRow">
-            <!-- (2) Botga kirish o'rniga -->
             <button class="btn btnPrimary" onclick="openBot('book')">📅 Qabulga yozilish</button>
             <button class="btn btnGhost" onclick="scrollToId('services')">🧩 Xizmatlar</button>
             <button class="btn btnGhost" onclick="scrollToId('prices')">💰 Narxlar</button>
@@ -467,7 +504,6 @@
         <div class="heroRight">
           <div class="statGrid">
             <div class="stat"><b>1</b><small>Qabulga yozilasiz</small></div>
-            <!-- (3) 2-qadam -->
             <div class="stat"><b>2</b><small>Qabulga yozilish bilan vaqt tanlaysiz</small></div>
             <div class="stat"><b>3</b><small>Tasdiq olasiz</small></div>
           </div>
@@ -476,7 +512,7 @@
             <div class="badgeIcon">UZ</div>
             <div>
               <b>Xizmatlar katalogi</b>
-              <p>Har bir xizmat: izoh + narx + botga yozilish.</p>
+              <p>Har bir xizmat: izoh + narx + yozilish.</p>
             </div>
           </div>
 
@@ -484,7 +520,7 @@
             <div class="badgeIcon" style="background:linear-gradient(135deg, rgba(255,159,10,.95), rgba(255,69,58,.92));">⏰</div>
             <div>
               <b>Tez eslatmalar</b>
-              <p>Bot qabul vaqtini eslatadi (kelmay qolish kamayadi).</p>
+              <p>Qabul vaqtini eslatadi (kelmay qolish kamayadi).</p>
             </div>
           </div>
         </div>
@@ -499,37 +535,37 @@
         </div>
 
         <div class="svcGrid">
-          <div class="svc" onclick="openBot('karies')">
+          <div class="svc" onclick="showService('karies')">
             <div class="ic icBlue">🦷</div>
             <b>Karies davolash</b>
             <small>Tozalash + plomba qo‘yish</small>
           </div>
 
-          <div class="svc" onclick="openBot('whitening')">
+          <div class="svc" onclick="showService('whitening')">
             <div class="ic icGreen">✨</div>
             <b>Oqartirish</b>
             <small>1 yoki 2 jag‘</small>
           </div>
 
-          <div class="svc" onclick="openBot('extraction')">
+          <div class="svc" onclick="showService('extraction')">
             <div class="ic icOrange">🪥</div>
             <b>Tish sug‘urish</b>
             <small>Oddiy / qiyin / aql tishi</small>
           </div>
 
-          <div class="svc" onclick="openBot('implant')">
+          <div class="svc" onclick="showService('implant')">
             <div class="ic icBlue" style="background:linear-gradient(135deg, rgba(10,132,255,1), rgba(48,209,88,1));">🔩</div>
             <b>Implant</b>
             <small>Koreys / Yevropa</small>
           </div>
 
-          <div class="svc" onclick="openBot('braces')">
+          <div class="svc" onclick="showService('braces')">
             <div class="ic icRed">😬</div>
             <b>Breket</b>
             <small>Metall / keramika</small>
           </div>
 
-          <div class="svc" onclick="openBot('kids')">
+          <div class="svc" onclick="showService('kids')">
             <div class="ic icGreen" style="background:linear-gradient(135deg, rgba(48,209,88,1), rgba(255,214,10,.95));">👶</div>
             <b>Bolalar</b>
             <small>Sut tishlari, karies</small>
@@ -545,14 +581,10 @@
       <div class="glass section" id="karies">
         <div class="sectionHeader">
           <h2>🦷 Karies davolash</h2>
-          <span>rasm + qadamlar</span>
+          <span>qadamlar</span>
         </div>
 
         <div class="karies">
-          <div class="imgBox">
-            <img src="karies_uz.png" alt="Karies davolash (o‘zbekcha)"
-                 onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=&quot;padding:14px;color:rgba(255,255,255,.62);text-align:center;line-height:1.5;font-weight:800&quot;>Rasm topilmadi.<br>Rasmni <b>karies_uz.png</b> deb nomlab, shu HTML yoniga qo‘ying.</div>';">
-          </div>
           <div class="steps">
             <ol>
               <li>Karies aniqlanadi</li>
@@ -581,7 +613,7 @@
       </div>
 
       <div class="list">
-        <div class="row" onclick="openBot('karies')">
+        <div class="row" onclick="showService('karies')">
           <div>
             <b>Karies davolash</b>
             <em>Tozalash + plomba</em>
@@ -589,7 +621,7 @@
           <div class="price">150 000 – 350 000 so‘m</div>
         </div>
 
-        <div class="row" onclick="openBot('whitening')">
+        <div class="row" onclick="showService('whitening')">
           <div>
             <b>Oqartirish (1 jag‘)</b>
             <em>Estetika</em>
@@ -597,18 +629,89 @@
           <div class="price">600 000 – 1 200 000 so‘m</div>
         </div>
 
-        <div class="row" onclick="openBot('extraction')">
+        <div class="row" onclick="showService('whitening')">
+          <div>
+            <b>Oqartirish (2 jag‘)</b>
+            <em>Estetika</em>
+          </div>
+          <div class="price">1 100 000 – 2 200 000 so‘m</div>
+        </div>
+
+        <div class="row" onclick="showService('extraction')">
           <div>
             <b>Tish sug‘urish</b>
             <em>Oddiy</em>
           </div>
           <div class="price">100 000 – 250 000 so‘m</div>
         </div>
+
+        <div class="row" onclick="showService('extraction')">
+          <div>
+            <b>Tish sug‘urish</b>
+            <em>Qiyin</em>
+          </div>
+          <div class="price">250 000 – 600 000 so‘m</div>
+        </div>
+
+        <div class="row" onclick="showService('extraction')">
+          <div>
+            <b>Aql tishi</b>
+            <em>Sug‘urish</em>
+          </div>
+          <div class="price">350 000 – 900 000 so‘m</div>
+        </div>
+
+        <div class="row" onclick="showService('implant')">
+          <div>
+            <b>Implant (Koreys)</b>
+            <em>1 dona</em>
+          </div>
+          <div class="price">6 000 000 – 10 000 000 so‘m</div>
+        </div>
+
+        <div class="row" onclick="showService('implant')">
+          <div>
+            <b>Implant (Yevropa)</b>
+            <em>1 dona</em>
+          </div>
+          <div class="price">10 000 000 – 18 000 000 so‘m</div>
+        </div>
+
+        <div class="row" onclick="showService('braces')">
+          <div>
+            <b>Breket (Metall)</b>
+            <em>To‘liq jag‘</em>
+          </div>
+          <div class="price">12 000 000 – 20 000 000 so‘m</div>
+        </div>
+
+        <div class="row" onclick="showService('braces')">
+          <div>
+            <b>Breket (Keramika)</b>
+            <em>To‘liq jag‘</em>
+          </div>
+          <div class="price">18 000 000 – 30 000 000 so‘m</div>
+        </div>
+
+        <div class="row" onclick="showService('kids')">
+          <div>
+            <b>Bolalar ko‘rigi</b>
+            <em>Konsultatsiya</em>
+          </div>
+          <div class="price">50 000 – 100 000 so‘m</div>
+        </div>
+
+        <div class="row" onclick="showService('kids')">
+          <div>
+            <b>Bolalar plomba</b>
+            <em>Sut tishlari</em>
+          </div>
+          <div class="price">120 000 – 300 000 so‘m</div>
+        </div>
       </div>
 
       <div class="btnRow" style="margin-top:12px">
-        <button class="btn btnPrimary btnSmall" onclick="openBot('prices')">💬 Botda to‘liq narxlar</button>
-        <button class="btn btnGhost btnSmall" onclick="scrollToId('contact')">📍 Aloqa</button>
+        <button class="btn btnPrimary btnSmall" onclick="scrollToId('contact')">📍 Aloqa</button>
       </div>
     </section>
 
@@ -624,10 +727,12 @@
             <b>Telefon</b>
             <em>Registratsiya</em>
           </div>
-          <div class="price"><a href="tel:+998901234567" style="color:var(--text)">+998 90 123 45 67</a></div>
+          <div class="price">
+            <a href="tel:+998958030050" style="color:var(--text); text-decoration:none;">+998 95 803 00 50</a>
+          </div>
         </div>
 
-        <div class="row" onclick="showToast('Manzil linkini shu yerga qo‘yasiz')">
+        <div class="row" onclick="openMap(41.007275,71.621677)">
           <div>
             <b>Manzil</b>
             <em>Google xarita</em>
@@ -636,18 +741,12 @@
         </div>
       </div>
 
-      <div class="btnRow" style="margin-top:12px">
-        <button class="btn btnPrimary btnSmall" onclick="openBot('contact')">📲 Bot orqali bog‘lanish</button>
-        <button class="btn btnGhost btnSmall" onclick="copyText('t.me/' + BOT_USERNAME)">🔗 Bot link</button>
-      </div>
-
       <div class="footer">© Stomatologiya • Premium demo UI</div>
     </section>
 
     <div class="safeBot"></div>
   </div>
 
-  <!-- Tabbar -->
   <div class="tabbar">
     <div class="tabbarInner">
       <button class="tab active" id="tabHome" onclick="tabGo('home', this)"><div class="ticon">🏠</div>Home</button>
@@ -659,15 +758,37 @@
 
   <div id="toast" class="toast"></div>
 
+  <div id="serviceModal" class="modalOverlay" onclick="overlayClose(event)">
+    <div class="glass modalCard" onclick="event.stopPropagation()">
+      <div class="modalHead">
+        <h3 id="svcTitle">Xizmat</h3>
+        <button class="modalClose" onclick="closeService()">✕</button>
+      </div>
+      <div class="modalP" id="svcDesc"></div>
+      <div class="modalWarn" id="svcDanger"></div>
+      <div class="modalPrice" id="svcPrice"></div>
+
+      <div class="btnRow" style="margin-top:12px">
+        <button class="btn btnPrimary btnSmall" id="svcBookBtn">📅 Qabulga yozilish</button>
+        <button class="btn btnGhost btnSmall" onclick="closeService()">❌ Yopish</button>
+      </div>
+    </div>
+  </div>
+
   <script>
-    // ✅ BOT USERNAME (siz aytganidek)
-    const BOT_USERNAME = "NafisOil_bot";
+    // ✅ L2: BOT USERNAME
+    const BOT_USERNAME = "stomatologiyaaaa_bot";
 
     function openBot(startParam){
       const tgDeep = `tg://resolve?domain=${BOT_USERNAME}&start=${encodeURIComponent(startParam)}`;
       const webLink = `https://t.me/${BOT_USERNAME}?start=${encodeURIComponent(startParam)}`;
       window.location.href = tgDeep;
       setTimeout(() => window.location.href = webLink, 700);
+    }
+
+    function openMap(lat, lon){
+      const url = `https://www.google.com/maps?q=${lat},${lon}`;
+      window.open(url, "_blank");
     }
 
     function scrollToId(id){
@@ -691,6 +812,7 @@
       if(id === "home") setActive(document.getElementById("tabHome"));
       else if(id === "services" || id === "karies") setActive(document.getElementById("tabServices"));
       else if(id === "prices") setActive(document.getElementById("tabPrices"));
+      else if(id === "contact") setActive(document.getElementById("tabHome"));
     }
 
     async function copyText(text){
@@ -709,6 +831,75 @@
       t.style.display = "block";
       clearTimeout(toastTimer);
       toastTimer = setTimeout(() => (t.style.display="none"), 2000);
+    }
+
+    // ===== L1: Xizmat bosilganda info =====
+    const serviceData = {
+      karies: {
+        title: "🦷 Karies davolash",
+        desc: "Karies — tishda paydo bo‘lgan zararlangan joy. Biz uni tozalab, tishni mustahkam qilib plomba bilan tiklaymiz. Natija: og‘riq kamayadi, tish saqlanadi.",
+        danger: "Davolanmasa og‘riq kuchayadi, yallig‘lanish nervga yetib borishi va oxiri tishni yo‘qotishgacha olib kelishi mumkin.",
+        price: "💰 150 000 – 350 000 so‘m",
+        start: "karies"
+      },
+      whitening: {
+        title: "✨ Oqartirish",
+        desc: "Tabassumingizni yorqinlashtiradi. Oqartirishdan keyin tishlar yanada pokiza ko‘rinadi va o‘zingizga ishonch oshadi.",
+        danger: "Majburiy emas, lekin dog‘lar vaqt o‘tib kuchayishi va tabassumdagi ishonch pasayishi mumkin.",
+        price: "💰 600 000 – 2 200 000 so‘m",
+        start: "whitening"
+      },
+      extraction: {
+        title: "🪥 Tish sug‘urish",
+        desc: "Qutqarib bo‘lmaydigan yoki yallig‘langan tishni xavfsiz olib tashlaymiz. Maqsad: og‘riq va muammoga tez nuqta qo‘yish.",
+        danger: "Qoldirilsa yiring, shish va yallig‘lanish tarqalib, qo‘shni tishlarga ham zarar yetkazishi mumkin.",
+        price: "💰 100 000 – 900 000 so‘m",
+        start: "extraction"
+      },
+      implant: {
+        title: "🔩 Implant",
+        desc: "Yo‘qolgan tish o‘rniga “o‘z tishingizdek” xizmat qiladigan implant qo‘yiladi. Chaynash tiklanadi, ko‘rinish yaxshilanadi.",
+        danger: "Bo‘sh joyda suyak kamayishi va tishlar siljishi mumkin — keyinroq tuzatish qiyinlashadi.",
+        price: "💰 6 000 000 – 18 000 000 so‘m",
+        start: "implant"
+      },
+      braces: {
+        title: "😬 Breket",
+        desc: "Tishlarni tekislaydi va qatorni chiroyli qiladi. Gigiyena osonlashadi, tabassum premium ko‘rinadi.",
+        danger: "Notekis tishlar tezroq kariesga moyil bo‘ladi va chaynash notekis bo‘lishi mumkin.",
+        price: "💰 12 000 000 – 30 000 000 so‘m",
+        start: "braces"
+      },
+      kids: {
+        title: "👶 Bolalar stomatologiyasi",
+        desc: "Bolalarda sut tishlari ham muhim. Erta davolash — og‘riqsiz, tez va eng arzon yechim.",
+        danger: "Davolanmasa sut tishi muammosi doimiy tishlarga ham zarar yetkazishi mumkin.",
+        price: "💰 50 000 – 300 000 so‘m",
+        start: "kids"
+      }
+    };
+
+    function showService(key){
+      const s = serviceData[key];
+      if(!s) return;
+
+      document.getElementById("svcTitle").textContent = s.title;
+      document.getElementById("svcDesc").textContent = s.desc;
+      document.getElementById("svcDanger").textContent = "⚠️ " + s.danger;
+      document.getElementById("svcPrice").textContent = s.price;
+
+      const bookBtn = document.getElementById("svcBookBtn");
+      bookBtn.onclick = () => openBot(s.start || "book");
+
+      document.getElementById("serviceModal").style.display = "flex";
+    }
+
+    function closeService(){
+      document.getElementById("serviceModal").style.display = "none";
+    }
+
+    function overlayClose(e){
+      if(e.target && e.target.id === "serviceModal") closeService();
     }
   </script>
 </body>
